@@ -28,7 +28,7 @@ class _MyTodoListState extends State<MyTodoList> {
   final List<String> _todoList = [];
   final List<bool> _todoListChecked = [];
 
-  void _incrementCounter() {
+  void _addNewTodo() {
     setState(() {
       _todoList.add('Item ${_todoList.length + 1}');
       _todoListChecked.add(false);
@@ -74,8 +74,8 @@ class _MyTodoListState extends State<MyTodoList> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: _addNewTodo,
+        tooltip: 'Add new TODO',
         child: const Icon(Icons.add),
       ),
     );
