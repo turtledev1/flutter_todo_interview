@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/models/todo_item.dart';
+import 'package:todo_app/widgets/todo_list_item.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,13 +27,11 @@ class MyTodoList extends StatefulWidget {
 }
 
 class _MyTodoListState extends State<MyTodoList> {
-  final List<String> _todoList = [];
-  final List<bool> _todoListChecked = [];
+  final List<TodoItem> _todoList = [];
 
   void _incrementCounter() {
     setState(() {
-      _todoList.add('Item ${_todoList.length + 1}');
-      _todoListChecked.add(false);
+      _todoList.add(TodoItem(title: 'Item ${_todoList.length + 1}'));
     });
   }
 
@@ -52,26 +52,13 @@ class _MyTodoListState extends State<MyTodoList> {
             child: ListView.builder(
               itemCount: _todoList.length,
               itemBuilder: (context, index) {
-                return Dismissible(
-                  key: ValueKey(_todoList[index]),
-                  onDismissed: (direction) => setState(() {
-                    _todoList.removeAt(index);
-                    _todoListChecked.removeAt(index);
-                  }),
-                  child: ListTile(
-                    leading: const Icon(Icons.drag_indicator),
-                    title: Text(_todoList[index]),
-                    trailing: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _todoListChecked[index] = !_todoListChecked[index];
-                        });
-                      },
-                      icon: Icon(_todoListChecked[index]
-                          ? Icons.check_box
-                          : Icons.check_box_outline_blank),
-                    ),
-                  ),
+                return TodoListItem(
+                  todoItem: _todoList[index],
+                  onDismissed: () {
+                    setState(() {
+                      _todoList.removeAt(index);
+                    });
+                  },
                 );
               },
             ),
