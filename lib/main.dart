@@ -54,13 +54,18 @@ class _MyTodoListState extends State<MyTodoList> {
               itemBuilder: (context, index) {
                 return Dismissible(
                   key: ValueKey(_todoList[index]),
-                  onDismissed: (direction) => _todoList.removeAt(index),
+                  onDismissed: (direction) => setState(() {
+                    _todoList.removeAt(index);
+                    _todoListChecked.removeAt(index);
+                  }),
                   child: ListTile(
                     leading: const Icon(Icons.drag_indicator),
                     title: Text(_todoList[index]),
                     trailing: IconButton(
                       onPressed: () {
-                        _todoListChecked[index] = !_todoListChecked[index];
+                        setState(() {
+                          _todoListChecked[index] = !_todoListChecked[index];
+                        });
                       },
                       icon: Icon(_todoListChecked[index]
                           ? Icons.check_box

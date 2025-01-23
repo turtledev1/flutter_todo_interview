@@ -55,9 +55,8 @@ void main() {
     await tester.tap(find.byIcon(Icons.check_box_outline_blank));
     await tester.pump();
 
-    // This one doesn't work
-    // expect(find.byIcon(Icons.check_box_outline_blank), findsNothing);
-    // expect(find.byIcon(Icons.check_box), findsOneWidget);
+    expect(find.byIcon(Icons.check_box_outline_blank), findsNothing);
+    expect(find.byIcon(Icons.check_box), findsOneWidget);
   });
 
   testWidgets('When dismiss an item, can add another one', (WidgetTester tester) async {
@@ -75,10 +74,9 @@ void main() {
 
     expect(find.text('Item 1'), findsNothing);
 
-    // This one doesn't work
-    // await tester.tap(find.byIcon(Icons.add));
-    // await tester.pump();
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pump();
 
-    // expect(find.text('Item 1'), findsOneWidget);
+    expect(find.text('Item 1'), findsOneWidget);
   });
 }
