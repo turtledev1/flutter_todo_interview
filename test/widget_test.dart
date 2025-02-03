@@ -32,4 +32,44 @@ void main() {
     expect(find.byIcon(Icons.check_box_outline_blank), findsOneWidget);
     expect(find.byIcon(Icons.check_box), findsNothing);
   });
+
+  testWidgets('When check an item, it is checked', (WidgetTester tester) async {
+    await tester.pumpWidget(const MyApp());
+
+    expect(find.text('Item 1'), findsNothing);
+
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pump();
+
+    expect(find.text('Item 1'), findsOneWidget);
+    expect(find.byIcon(Icons.check_box_outline_blank), findsOneWidget);
+    expect(find.byIcon(Icons.check_box), findsNothing);
+
+    await tester.tap(find.byIcon(Icons.check_box_outline_blank));
+    await tester.pump();
+
+    expect(find.byIcon(Icons.check_box_outline_blank), findsNothing);
+    expect(find.byIcon(Icons.check_box), findsOneWidget);
+  });
+
+  testWidgets('When dismiss an item, can add another one', (WidgetTester tester) async {
+    await tester.pumpWidget(const MyApp());
+
+    expect(find.text('Item 1'), findsNothing);
+
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pump();
+
+    expect(find.text('Item 1'), findsOneWidget);
+
+    await tester.drag(find.byType(Dismissible), const Offset(500.0, 0.0));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Item 1'), findsNothing);
+
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pump();
+
+    expect(find.text('Item 1'), findsOneWidget);
+  });
 }
